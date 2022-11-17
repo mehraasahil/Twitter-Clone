@@ -1,0 +1,75 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<!-- <section class="hm">
+<h1>GHoshla</h1></section> -->
+<section class="content">
+    <h1>HOME</h1>
+    <section class="post_form">
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <img class="TT" src="{% static 'img/logo.png' %}" />
+            {% csrf_token %}
+
+            </div>
+            <input type="text" name="name" placeholder="Name" required /><br />
+            <textarea name="body" placeholder="Tell us anything" required></textarea><br />
+            <div class="mb">
+                <input class="form-control form-control-sm" name="image" type="file">
+            </div>
+            <button class="btn" type="submit">Tweet</button>
+        </form>
+    </section>
+
+
+    <section class="posts">
+        {% if tweets.count == 0 %}
+        <p class="p-3">There is no tweet now.</p>
+        {% else %}
+        <ul>
+            {% for post in posts %}
+            <li>
+                <img class="list_icon js-list-icon" src="{% static 'img/list.png' %}" />
+
+
+                <div class="list">
+                    <a href="/delete/{{ post.id }}/">Delete</a>
+                    <br>
+                    <a href="/edit/{{ post.id }}/">Edit</a>
+                </div>
+                <div class="logo">
+                    <img src="{% static 'img/user.png' %}" />
+                </div>
+                <div class="name_body">
+                    <!-- <img class="lk" src="/static/img/like.png" alt="twitter logo"> -->
+                    <div class="name">{{post.name}}</div><br />
+                    <div class="datetime">{{post.created_at}}</div><br />
+                    <!-- <img class="lk" src="{% static 'img/like.png' %}" /> -->
+                    <p>{{post.body}}</p>
+                    {% if post.image %}
+                    <img class="post-border" src="{{ post.image.url }}"> <br>
+                    {% endif %}
+                    <div id="like-img">
+                        
+                    <a href="/like/{{post.id}}"><img src="/static/img/like.png" alt=""></a>
+                        <!-- <button type="submit", name="post_id", value="{{post.id}}">
+                            <img src="/static/img/like.png" alt=""></button> -->
+                            {{post.likecount}}
+                    </div> 
+                    <!-- <div class=“like_count”>
+                        <a href=“/like/{{post.id}}“>
+                          <img src=“/static/img/heart.png” style=“width: 30px”
+                        /></a>
+                        {{post.likecount}}
+                      </div> -->
+
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="{% static 'js/posts.js' %}"></script>
+    </section>
+
+</section>
+{% endblock %}
